@@ -20,6 +20,7 @@ const Auth = () => {
   const dispatch = useDispatch();
   const { authMode } = useSelector((state) => state.user);
   function handleChange({ value, name }) {
+    setError("");
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -40,6 +41,9 @@ const Auth = () => {
       const res = await axios.post(BASE_URL + endpoint, payload, {
         withCredentials: true,
       });
+      setError("");
+      console.log("res data:",res.data.data);
+      
       if (authMode == "login") {
         dispatch(addUser(res.data.data));
         navigate("/feed");
@@ -56,7 +60,26 @@ const Auth = () => {
         });
       }
     } catch (error) {
-      setError(error.response?.data?.data || "Something went wrong");
+      //setError(error.response?.data?.data || "Something went wrong");
+       const errorPayload = error.response?.data;
+
+      // Scenario 1: The backend sends the array directly in the response body
+      if (Array.isArray(errorPayload)) {
+        // Grab the "message" from the first error in the array
+        setError(errorPayload[0].message); 
+      } 
+      // Scenario 2: The backend nests the array inside another "data" object
+      else if (errorPayload?.data && Array.isArray(errorPayload.data)) {
+        setError(errorPayload.data[0].message);
+      } 
+      // Scenario 3: The backend sends a simple string message
+      else if (typeof errorPayload?.data === 'string') {
+        setError(errorPayload.data);
+      } 
+      // Fallback: If all else fails or the server is down
+      else {
+        setError("Something went wrong");
+      }
     }
   };
   return (

@@ -5,6 +5,7 @@ import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
 import CardDeck from "../Components/CardDeck";
+import EmptyState from "../Components/EmptyState.jsx"
 
 const Feed = () => {
   const dispatch = useDispatch();

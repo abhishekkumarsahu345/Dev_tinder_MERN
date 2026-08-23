@@ -43,12 +43,16 @@ const Chat = () => {
     };
   }, [loggedInuserId, msgUserId]);
   useEffect(() => {
-    if (!newMsg) return;
+    //f (!newMsg) return;
     const roomID = [loggedInuserId, msgUserId].sort().join("_");
+    if (!newMsg) {
+  socket.current.emit("stopTyping", { roomID });
+  return;
+}
     socket.current.emit("typing", { sender: loggedInuserId, roomID });
     const timer = setTimeout(() => {
       socket.current.emit("stopTyping", { roomID });
-    }, 3000);
+    }, 1500);
     return () => clearTimeout(timer);
   }, [newMsg]);
   const sendMessage = () => {

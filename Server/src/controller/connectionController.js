@@ -61,12 +61,12 @@ async function sendConnection(req, res) {
         if(status==="interested"){
     emailservice.sendEmail({
       to: receiver.emailId,
-      subject: "New connection request on Bytemate",
+      subject: "New connection request on DevTinder",
       text: `${sender.firstName} showed interested in your profile.`,
       html: `
     <h2>New Connection Request</h2>
     <p><strong>${sender.firstName}</strong> showed interest in your profile.</p>
-    <p>Open Bytemate to respond.</p>
+    <p>Open DevTinder to respond.</p>
   `,
     });
   }

@@ -45,12 +45,12 @@ const Header = () => {
         <div className="flex items-center justify-between py-3">
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <img src="/bytemate.png" alt="logo" className="h-9 w-9" />
+            <img src="/devtinder.png" alt="logo" className="h-9 w-9" />
             <Link
               to="/"
               className="text-xl font-semibold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent tracking-tight"
             >
-              ByteMate
+              DevTinder
             </Link>
           </div>
           {!isUserLoggedIn && (

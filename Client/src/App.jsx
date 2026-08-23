@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import "./App.css";
 import { Suspense, lazy } from "react";
 import { ToastContainer } from "react-toastify";
@@ -22,11 +22,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: (
-          <AuthRoute>
-            <Home />
-          </AuthRoute>
-        ),
+        element: <Navigate to="/home" replace />,
       },
       {
         path: "/home",

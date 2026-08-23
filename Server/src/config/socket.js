@@ -4,8 +4,7 @@ const onlineUsers = new Map();
 const intializeSocket = (server) => {
   const io = socket(server, {
     cors: {
-      origin: "https://bytemateui.onrender.com",
-      
+      origin: process.env.CLIENT_URL || "http://localhost:5173",
     },
   });
   io.on("connection", (socket) => {

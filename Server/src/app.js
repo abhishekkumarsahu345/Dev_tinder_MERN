@@ -16,7 +16,7 @@ app.set("trust proxy", 1);
 const server = http.createServer(app);
 app.use(
   cors({
-    origin: "https://bytemateui.onrender.com",
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
     credentials: true,
   }),
 );

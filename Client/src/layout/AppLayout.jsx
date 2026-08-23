@@ -20,7 +20,10 @@ function AppLayout() {
 
       dispatch(addUser(res.data));
     } catch (error) {
-      if (error.status === 401) {
+      // Only redirect to /auth if on a protected page
+      const publicPaths = ["/", "/home", "/about", "/pricing", "/auth"];
+      const isPublic = publicPaths.some((p) => window.location.pathname === p || window.location.pathname.startsWith(p));
+      if (error.status === 401 && !isPublic) {
         navigate("/auth");
       }
       console.error(error.message);
@@ -36,7 +39,7 @@ function AppLayout() {
         <Outlet />
       </main>
       <div className="p-10 mt-10 bg-gray-800 text-center">
-        ❤️Made by Debasis
+        🧑🏻‍💻 Made by Abhishek, Sonu, Subha, Subhrajit, Subhrali
       </div>
     </div>
   );

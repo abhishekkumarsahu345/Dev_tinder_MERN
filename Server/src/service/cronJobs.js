@@ -21,7 +21,7 @@ cron.schedule("0 2 * * *", async () => {
     for (const req of pendingRequests) {
       await emailservice.sendEmail({
         to: req.toUserId.emailId,
-        subject: "New connection request on Bytemate",
+        subject: "New connection request on DevTinder",
         text: `${req.fromUserId.firstName} showed interested in your profile.`,
         html: `
   <div style="font-family: Arial, sans-serif; line-height: 1.6;">
@@ -29,7 +29,7 @@ cron.schedule("0 2 * * *", async () => {
 
     <p>
       <strong>${req.fromUserId.firstName}</strong> showed interest in your profile on 
-      <strong>Bytemate</strong>.
+      <strong>DevTinder</strong>.
     </p>
 
     <p>
@@ -39,7 +39,7 @@ cron.schedule("0 2 * * *", async () => {
     <br />
 
     <p style="color: #555;">
-      — Team Bytemate
+      — Team DevTinder
     </p>
   </div>
 `,

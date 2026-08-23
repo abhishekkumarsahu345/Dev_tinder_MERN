@@ -1,2 +1,28 @@
-node_modules
+# Dependencies
+node_modules/
+
+# Environment variables - NEVER commit these
 .env
+.env.local
+.env.*.local
+
+# Multer temp uploads
+uploads/
+tmp/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Build output (if any)
+dist/
+build/

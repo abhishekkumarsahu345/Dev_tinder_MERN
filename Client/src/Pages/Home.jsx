@@ -29,7 +29,7 @@ const Home = () => {
         {/* Right: Banner/Image */}
         <div className="md:w-1/2">
           <img
-            src="/banner.png"
+            src="/banner1.png"
             alt="Developer Banner"
             className="rounded-lg shadow-lg"
           />

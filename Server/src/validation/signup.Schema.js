@@ -5,6 +5,6 @@ const validateSignup=z.object({
   emailId: z.string().trim().toLowerCase().email("Enter a valid email"),
   password: z.string()
     .min(6, "Password must be at least 6 characters")
-    .regex(/[@$!%*?&]/, "Password must contain one special character"),
+    .regex(/[@$!%*?&#]/, "Password must contain one special character"),
 })
 module.exports=validateSignup;

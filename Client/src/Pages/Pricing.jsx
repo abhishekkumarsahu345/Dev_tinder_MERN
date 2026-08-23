@@ -8,18 +8,17 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 const Pricing = () => {
   const [premimum, setPremimum] = useState(false);
-  const [plan, setPlan] = useState('');
-  const{user}=useSelector((store)=>store.user);
-  const navigate=useNavigate();
+  const [plan, setPlan] = useState("");
+  const { user } = useSelector((store) => store.user);
+  const navigate = useNavigate();
   const verifyPremimumUser = async () => {
     try {
       const res = await axios.get(BASE_URL + "payment/verify/premimum", {
         withCredentials: true,
       });
-     
+
       setPremimum(res.data.data.isPremimum);
       setPlan(res.data.data.membership);
-     
     } catch (error) {
       console.error(error.message);
     }
@@ -28,16 +27,16 @@ const Pricing = () => {
     verifyPremimumUser();
   }, []);
   const handleBuy = async (type) => {
-      if(!user){
-        return navigate("/auth");
-      }
+    if (!user) {
+      return navigate("/auth");
+    }
     try {
       const res = await axios.post(
         BASE_URL + "payment/create",
         { membership: type },
         { withCredentials: true },
       );
-   
+
       const { keyId, amount, currency, notes, orderId } = res.data.data;
       const options = {
         key: keyId, // Replace with your Razorpay key_id
@@ -78,24 +77,27 @@ const Pricing = () => {
             <h2 className="text-xl font-semibold text-slate-200 mb-2">
               Current Plan
             </h2>
-           {plan=="silver"?(<div className="text-4xl font-bold text-indigo-400 uppercase">
-              {plan}
-            </div>):(<div className="text-4xl font-bold  text-yellow-500 uppercase">
-              {plan}
-            </div>)}
-           
+            {plan == "silver" ? (
+              <div className="text-4xl font-bold text-indigo-400 uppercase">
+                {plan}
+              </div>
+            ) : (
+              <div className="text-4xl font-bold  text-yellow-500 uppercase">
+                {plan}
+              </div>
+            )}
 
             <p className="text-slate-400 mt-4">
               You have full access to all features of the{" "}
               <span className="font-semibold capitalize">{plan}</span> plan.
             </p>
-                <button
-          className="mt-6 w-full rounded-xl bg-indigo-700 py-3 font-semibold text-white
+            <button
+              className="mt-6 w-full rounded-xl bg-indigo-700 py-3 font-semibold text-white
                      hover:bg-indigo-600 transition-all duration-200"
-                     onClick={()=>navigate("/feed")}
-        >
-           Explore Features
-        </button>
+              onClick={() => navigate("/feed")}
+            >
+              Explore Features
+            </button>
           </div>
         </div>
       </Container>
@@ -138,7 +140,15 @@ const Pricing = () => {
               </li>
             </ul>
 
-            <button className="w-full bg-slate-800 text-slate-100 py-3 rounded-full hover:bg-slate-700 transition">
+            <button
+              type="button" // Add type button to prevent any form submission behavior
+              onClick={(e) => {
+                e.preventDefault();
+                console.log("Navigating to auth..."); // Debugging line
+                navigate("/auth");
+              }}
+              className="w-full bg-slate-800 text-slate-100 py-3 rounded-full hover:bg-slate-700 transition"
+            >
               Get Started
             </button>
           </div>
