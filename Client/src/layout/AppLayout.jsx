@@ -39,7 +39,7 @@ function AppLayout() {
         <Outlet />
       </main>
       <div className="p-10 mt-10 bg-gray-800 text-center">
-        🧑🏻‍💻 Made by Abhishek, Sonu, Subha, Subhrajit, Subhrali
+        🧑🏻‍💻 Made by Abhishek
       </div>
     </div>
   );

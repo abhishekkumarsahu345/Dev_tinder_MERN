@@ -202,3 +202,40 @@ Vite uses `import.meta.env` for env variables, not `process.env` (which is Node.
 
 **Interview answer:**
 > "Vite bakes `import.meta.env.VITE_*` variables into the static bundle at build time. I kept localhost as the fallback in constants.js for local dev, and set the real Render URL via Vercel's environment variable dashboard. No secrets are hardcoded, no .env files are committed. All axios calls already had `withCredentials: true` so JWT cookie auth works cross-origin."
+
+---
+
+## 8. Fixed Vercel SPA 404 on direct URL access
+
+**Problem:**
+Navigating to `https://devtinder-six.vercel.app/home` directly returned `404 NOT_FOUND`.
+Works fine inside the app because React Router handles it client-side.
+But Vercel's CDN tried to find a physical file at `/home` in the `dist/` folder — found nothing — returned 404.
+
+**Root cause:**
+React Router uses the HTML5 History API (`createBrowserRouter`). All routes are virtual — only `index.html` physically exists. Any direct URL access or browser refresh on a non-root path hits Vercel's static file server, which has no fallback configured.
+
+**Fix:**
+Created `Client/vercel.json` with a catch-all rewrite:
+```json
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
+```
+This tells Vercel: for ANY request path, serve `index.html`. React Router then picks up the URL and renders the correct page.
+
+**Files created:**
+- `Client/vercel.json`
+
+**Build result:** ✅ 166 modules, 0 errors, 2.72s
+
+**What to do:**
+1. `git add Client/vercel.json`
+2. `git commit -m "fix: add vercel SPA fallback rewrite"`
+3. `git push`
+4. Vercel auto-redeploys — `https://devtinder-six.vercel.app/home` will work
+
+**Interview answer:**
+> "This is a classic SPA deployment issue. React Router uses the browser History API — routes like /home don't exist as real files, they're handled entirely in JavaScript. When you deploy to a static host like Vercel and hit /home directly, the server looks for a physical file, finds nothing, and returns 404. The fix is a catch-all rewrite rule in vercel.json that serves index.html for every path. The browser loads React, React Router reads the URL, and renders the correct component."
